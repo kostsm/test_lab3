@@ -1,16 +1,30 @@
-language:
-  - cpp
+os: linux
+dist: bionic
 
+language:
+    - cpp
+            
 before_install:
-  - pip install --user cpp-coveralls
+    - pip install --user cpp-coveralls
+
+addons:
+  sonarcloud:
+    organization: "kostsm"
 
 script:
-  - qmake
-  - make
-  - ./tests/tests
-
+    - qmake 
+    - make
+    - ./tests/tests
+    
 after_success:
-  - coveralls --root . -E ".*external.*" -E ".*tests.*"
-
+    - coveralls --root . -E ".*external.*" -E ".*tests.*"
+    - build-wrapper-linux-x86-64 --out-dir bw-output make clean all
+   # - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
+    
+cache:
+    directories:
+    - '$HOME/.m2/repository'
+ #   - '$HOME/.sonar/cache'
+    
 notifications:
-  email: false
+    email: false 
