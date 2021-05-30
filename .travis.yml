@@ -10,6 +10,8 @@ before_install:
 addons:
   sonarcloud:
     organization: "kostsm"
+    token:
+      secure: "Rory/0Ljic2mBAXhemf6a1/KALCa/ArMxKIvN8H2uoa2xuFlghhHifHVpgQZMYBnDEgVdHzW2zfNhCeCeDqRAxkpX6uJyoOE8fgM70+BMReUtNIjuXcwzHomew3fjifgrRA3hVX28FGdRECjZ2yUNZTVjl5NCvPBTYldw457MZmbEk8rzqi1+D6sTr7uQYW46/B92B9/PeRAXjktcjr7ERO2DAanctuxlNv6t1sxftn8CbvvvcmXleyeFID8Yib4gMzzfJapuNV7vRmEg1N6rf8PXh+0u9XbGwteyJIbxxYk5UkgmhLfaIEx74zi+Y/yQDp5xunIIdIAMpbsQSgEPbFLPZQC+HWl9gKmnJNpuG1zxX4YaccwM7nfO07WRo84kI49D4Pomqt5N3Pu9dQ9kAjsZnvn++fR+3HltJ6UILh+IR9gUJ5OZOKwUgwk1tkImrDMd8M7/DWSF65fj64wBxrZoHmEa5nruhbPWuoVzXlSZY7onSBrAb4PO1QpESQ6qbMlXZAGYlP29X8kyAEnK2DnQ+rHmaz+T4RhnhxpzQCR8wKV3oFOo4JgDvLtHUGja1HS6jMbm8jgE5kgl24WnbVktdgGQpq8kAipf6ul5Su9J0FvOxFD3xn7Wa6ve/V3CcoY+MrJNkUrsqQLJnKnByDXYqRAkWuWp8Im2MiwkSI="
 
 script:
     - qmake 
@@ -19,12 +21,12 @@ script:
 after_success:
     - coveralls --root . -E ".*external.*" -E ".*tests.*"
     - build-wrapper-linux-x86-64 --out-dir bw-output make clean all
-   # - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
+    - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
     
 cache:
     directories:
     - '$HOME/.m2/repository'
- #   - '$HOME/.sonar/cache'
+    - '$HOME/.sonar/cache'
     
 notifications:
     email: false 
